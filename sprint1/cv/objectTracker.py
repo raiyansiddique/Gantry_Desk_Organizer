@@ -1,18 +1,3 @@
-<<<<<<< HEAD
-import cv2 
-import numpy as np
-def colorDetection():
-    
-def main():
-    camera = cv2.VideoCapture(0)
-    while camera.isOpened():
-        ret, frame = camera.read()
-        cv2.imshow("Frame", frame)
-        if cv2.waitKey(25) & 0xFF == ord('q'):
-            break
-
-main()
-=======
 import time
 import cv2
 import numpy as np
@@ -110,4 +95,3 @@ if __name__ == '__main__':
     tracker = ObjectTracker()
     tracker.process_image()
     tracker.run_loop()
->>>>>>> 5943454408b91f0d1235fb62c4a830f1cd554e1f
