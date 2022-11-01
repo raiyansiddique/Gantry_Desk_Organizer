@@ -4,7 +4,7 @@ def colorDetection(redBounds, greenBounds, blueBounds, frame):
     binary_image = cv2.inRange(frame, (blueBounds[0],greenBounds[0],redBounds[0]), (blueBounds[1],greenBounds[1],redBounds[1]))
     return binary_image
 def main():
-    camera = cv2.VideoCapture(0)
+    camera = cv2.VideoCapture(2)
     while camera.isOpened():
         ret, frame = camera.read()
         cv2.imshow("Frame", frame)
