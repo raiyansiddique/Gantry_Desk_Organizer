@@ -1,8 +1,10 @@
-from math import nan
+from math import nan, isnan
 import cv2 
 import numpy as np
+from serial import Serial
+import time
 
-P_COSNTANT = 1.25
+P_COSNTANT = 1.5
 IMG_WIDTH = 640
 
 def color_detection(redBounds, greenBounds, blueBounds, frame):
@@ -12,9 +14,15 @@ def color_detection(redBounds, greenBounds, blueBounds, frame):
 def get_x_coord(bin_img):
     avg_x = np.sum(np.where(bin_img==255)[1])/len(np.where(bin_img==255)[1])
     speed = ((IMG_WIDTH/2) - avg_x) / P_COSNTANT
+    if isnan(speed):
+        speed = 0
     print(speed)
-    # return speed
-    # TODO: Add motor control
+    return int(speed)
+
+def writeSerial(info):
+    serialPort = Serial('/dev/ttyACM0', 9600, timeout=1) #Establishes Serial connection
+    serialPort.write(bytes(str(info), 'utf8'))
+    
 
 
 
@@ -28,7 +36,7 @@ def main():
         blueBounds = [50, 150]
         cv2.imshow("binary", color_detection(redBounds, greenBounds, blueBounds, frame))
         binary_image = color_detection(redBounds, greenBounds, blueBounds, frame)
-        get_x_coord(binary_image)
+        writeSerial(get_x_coord(binary_image))
         if cv2.waitKey(25) & 0xFF == ord('q'):
             break
 
