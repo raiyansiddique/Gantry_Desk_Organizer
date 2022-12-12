@@ -48,7 +48,7 @@ def write_serial(info):
 def main():
     """
     """
-    camera = cv2.VideoCapture(0)    # Start video capture. Index 2 is the USB camera
+    camera = cv2.VideoCapture(2)    # Start video capture. Index 2 is the USB camera
     while camera.isOpened():
         ret, frame = camera.read()
         cv2.imshow("Frame", frame)
@@ -58,7 +58,7 @@ def main():
         cv2.imshow("binary", color_detection(red_bounds, green_bounds, blue_bounds, frame))
         # Create a binary image using the RGB bounds for the red-orange test object
         binary_image = color_detection(red_bounds, green_bounds, blue_bounds, frame)
-        write_serial(get_x_speed(binary_image))
+        # write_serial(get_x_speed(binary_image))
         if cv2.waitKey(25) & 0xFF == ord('q'):
             break
 
