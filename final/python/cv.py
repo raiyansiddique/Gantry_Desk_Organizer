@@ -5,6 +5,7 @@ from serial import Serial
 
 P_COSNTANT = 1.65    # Proportional controller for Sprint1 motor speed
 IMG_WIDTH = 640     # Image width given from the Microsoft USB camera
+found_object = False
 
 def color_detection(hue_bounds, sat_bounds, val_bounds, frame):
     """
@@ -61,12 +62,18 @@ def get_contours(contours, frame, color: str):
             cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 0, 255), 2)
             cv2.putText(frame, color, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
             cv2.circle(frame, (rect_center), 4, (0, 255, 0), 2)
+            found_object = True
+        elif not found_object:
+            found_object = False
+
+
 
 
 def main():
     """
     """
     camera = cv2.VideoCapture(2)    # Start video capture. Index 2 is the USB camera
+
 
     cv2.namedWindow('controls')
     cv2.createTrackbar('hue lower bound', 'controls', 0, 179, nothing)
@@ -101,29 +108,27 @@ def main():
         r_val_bounds = [170, 255]
 
         # Green HSV Bounds
-        g_hue_bounds = [0, 179]
-        g_sat_bounds = [190, 255]
-        g_val_bounds = [60, 175]
+        g_hue_bounds = [55, 179]
+        g_sat_bounds = [60, 255]
+        g_val_bounds = [85, 255]
 
 
-        bin_image_list = ()
-
-        # Create a binary image using the HSV bounds for the hue-orange test object
-        # binary_image = cv2.inRange(frame, (hue_bounds[0],sat_bounds[0],val_bounds[0]), (hue_bounds[1],sat_bounds[1],val_bounds[1]))
+        # Create a binary image using the HSV bounds
         binary_image = color_detection(hue_bounds, sat_bounds, val_bounds, frame_HSV)
         purple_binary_image = color_detection(p_hue_bounds, p_sat_bounds, p_val_bounds, frame_HSV)
         blue_binary_image = color_detection(b_hue_bounds, b_sat_bounds, b_val_bounds, frame_HSV)
         green_binary_image = color_detection(g_hue_bounds, g_sat_bounds, g_val_bounds, frame_HSV)
-        # black_binary_image = color_detection(k_red_bounds, k_green_bounds, k_blue_bounds, frame)
         red_binary_image = color_detection(r_hue_bounds, r_sat_bounds, r_val_bounds, frame_HSV)
-        blue_contours = draw_contour(blue_binary_image)
-        purple_contours = draw_contour(purple_binary_image)
-        red_contours = draw_contour(red_binary_image)
-        green_contours = draw_contour(green_binary_image)
-        get_contours(blue_contours, frame, 'Blue')
-        get_contours(purple_contours, frame, 'Purple')
-        get_contours(red_contours, frame, 'Red')
-        get_contours(green_contours, frame, 'Green')
+
+
+        bin_image_list = [[binary_image, 'None'], [purple_binary_image, 'Purple'], [blue_binary_image, 'Blue'], [green_binary_image, 'Green'], [red_binary_image, 'Red']]
+
+    
+        
+        for bin in bin_image_list:
+            get_contours(draw_contour(bin[0]), frame, bin[1])
+            print(found_object)
+
         cv2.imshow("Frame", frame)
         cv2.imshow('binary', binary_image)
         # Close window
