@@ -9,13 +9,13 @@ int sofar;  // how much is in the buffer
 char state;
 String temp;
 void setup() {
-  pinMode(stepPin,OUTPUT); 
-  pinMode(dirPin,OUTPUT);
-  pinMode(stepPin1,OUTPUT); 
-  pinMode(dirPin1,OUTPUT);
+  pinMode(stepPin, OUTPUT);
+  pinMode(dirPin, OUTPUT);
+  pinMode(stepPin1, OUTPUT);
+  pinMode(dirPin1, OUTPUT);
   Serial.flush();
   Serial.begin(9600); // Serial communication begin to read data
- 
+
 }
 
 void loop() {
@@ -30,7 +30,7 @@ void loop() {
       // entire message received
       buffer[sofar] = 0; // end the buffer so string functions work right
       state = buffer[0];
-      
+
       temp = String(buffer);
       steps = temp.substring(1).toInt();
       buffer[0] = '\0';
@@ -165,6 +165,67 @@ void loop() {
           digitalWrite(stepPin, LOW);
           digitalWrite(stepPin1, LOW);
           delayMicroseconds(500);
+        }
+        state = 'a';
+        steps = 0;
+        break;
+      case 'j':
+        //Forward Same Direction
+        digitalWrite(dirPin, HIGH); // Enables the motor to move in a particular direction
+        digitalWrite(dirPin1, HIGH); // Enables the motor to move in a particular direction
+        for (int x = 0; x < steps; x++) {
+          digitalWrite(stepPin, HIGH);
+          digitalWrite(stepPin1, HIGH);
+          delayMicroseconds(1500);
+          digitalWrite(stepPin, LOW);
+          digitalWrite(stepPin1, LOW);
+          delayMicroseconds(1500);
+        }
+        state = 'a';
+        steps = 0;
+        break;
+      case 'k':
+        //Backward Same Direction
+        digitalWrite(dirPin, LOW); // Enables the motor to move in a particular direction
+        digitalWrite(dirPin1, LOW); // Enables the motor to move in a particular direction
+        for (int x = 0; x < steps; x++) {
+          digitalWrite(stepPin, HIGH);
+          digitalWrite(stepPin1, HIGH);
+          delayMicroseconds(1500);
+          digitalWrite(stepPin, LOW);
+          digitalWrite(stepPin1, LOW);
+          delayMicroseconds(1500);
+        }
+        state = 'a';
+        steps = 0;
+        break;
+      case 'l':
+        //Gripper move stationary
+        digitalWrite(dirPin, HIGH); // Enables the motor to move in a particular direction
+        digitalWrite(dirPin1, LOW); // Enables the motor to move in a particular direction
+        for (int x = 0; x < steps; x++) {
+          digitalWrite(stepPin, HIGH);
+          digitalWrite(stepPin1, HIGH);
+          delayMicroseconds(1500);
+          digitalWrite(stepPin, LOW);
+          digitalWrite(stepPin1, LOW);
+          delayMicroseconds(1500);
+        }
+        state = 'a';
+        steps = 0;
+        break;
+
+      case 'm':
+        //Gripper move stationary
+        digitalWrite(dirPin, LOW); // Enables the motor to move in a particular direction
+        digitalWrite(dirPin1, HIGH); // Enables the motor to move in a particular direction
+        for (int x = 0; x < steps; x++) {
+          digitalWrite(stepPin, HIGH);
+          digitalWrite(stepPin1, HIGH);
+          delayMicroseconds(1500);
+          digitalWrite(stepPin, LOW);
+          digitalWrite(stepPin1, LOW);
+          delayMicroseconds(1500);
         }
         state = 'a';
         steps = 0;
