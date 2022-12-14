@@ -1,0 +1,216 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L MCU_Module:Arduino_UNO_R2 A?
+U 1 1 639A396A
+P 5050 3450
+F 0 "A?" H 5050 4631 50  0000 C CNN
+F 1 "Arduino_UNO_R2" H 5050 4540 50  0000 C CNN
+F 2 "Module:Arduino_UNO_R2" H 5050 3450 50  0001 C CIN
+F 3 "https://www.arduino.cc/en/Main/arduinoBoardUno" H 5050 3450 50  0001 C CNN
+	1    5050 3450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Driver_Motor:Pololu_Breakout_A4988 StepperMotorDriver
+U 1 1 639A4427
+P 6800 3350
+F 0 "StepperMotorDriver" H 6850 4231 50  0000 C CNN
+F 1 "Pololu_Breakout_A4988" H 6850 4140 50  0000 C CNN
+F 2 "Module:Pololu_Breakout-16_15.2x20.3mm" H 7075 2600 50  0001 L CNN
+F 3 "https://www.pololu.com/product/2980/pictures" H 6900 3050 50  0001 C CNN
+	1    6800 3350
+	1    0    0    -1  
+$EndComp
+$Comp
+L Motor:Stepper_Motor_bipolar M?
+U 1 1 639A56E4
+P 8050 3450
+F 0 "M?" H 8238 3574 50  0001 L CNN
+F 1 "Lead Screw Stepper Motor" H 8238 3483 50  0000 L CNN
+F 2 "" H 8060 3440 50  0001 C CNN
+F 3 "http://www.infineon.com/dgdl/Application-Note-TLE8110EE_driving_UniPolarStepperMotor_V1.1.pdf?fileId=db3a30431be39b97011be5d0aa0a00b0" H 8060 3440 50  0001 C CNN
+	1    8050 3450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Motor:Motor_Servo M?
+U 1 1 639A6193
+P 3750 2950
+F 0 "M?" H 4082 3015 50  0001 L CNN
+F 1 "Motor Servo For Gripper" H 4082 2924 50  0000 L CNN
+F 2 "" H 3750 2760 50  0001 C CNN
+F 3 "http://forums.parallax.com/uploads/attachments/46831/74481.png" H 3750 2760 50  0001 C CNN
+	1    3750 2950
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	3950 4150 4400 4150
+Wire Wire Line
+	4400 4150 4400 3850
+Wire Wire Line
+	4400 3850 4550 3850
+Wire Wire Line
+	3950 4950 4050 4950
+Wire Wire Line
+	5150 4950 5150 4550
+Wire Wire Line
+	3950 3950 4300 3950
+Wire Wire Line
+	4300 3950 4300 2950
+Wire Wire Line
+	4300 1900 5250 1900
+Wire Wire Line
+	4050 2950 4300 2950
+Connection ~ 4300 2950
+Wire Wire Line
+	4300 2950 4300 2300
+Wire Wire Line
+	4050 3050 4050 4950
+Connection ~ 4050 4950
+Wire Wire Line
+	4050 4950 5150 4950
+Wire Wire Line
+	3950 4350 3950 4950
+Wire Wire Line
+	4050 2850 4200 2850
+Wire Wire Line
+	4200 2850 4200 3750
+Wire Wire Line
+	4200 3750 4550 3750
+$Comp
+L Sensor_Proximity:TSSP58P38 IR_Beam_Break
+U 1 1 639B5CEA
+P 3550 4150
+F 0 "IR_Beam_Break" H 3538 4575 50  0000 C CNN
+F 1 "TSSP58P38" H 3538 4484 50  0001 C CNN
+F 2 "OptoDevice:Vishay_MINICAST-3Pin" H 3500 3775 50  0001 C CNN
+F 3 "http://www.vishay.com/docs/82462/tsop581.pdf" H 4200 4450 50  0001 C CNN
+	1    3550 4150
+	1    0    0    -1  
+$EndComp
+NoConn ~ 1950 4150
+Wire Wire Line
+	1950 3950 1850 3950
+Wire Wire Line
+	1850 3950 1850 2300
+Wire Wire Line
+	1850 2300 4300 2300
+Connection ~ 4300 2300
+Wire Wire Line
+	4300 2300 4300 1900
+Wire Wire Line
+	1950 4350 1950 4950
+Wire Wire Line
+	1950 4950 3950 4950
+Connection ~ 3950 4950
+$Comp
+L Sensor_Proximity:TSSP58P38 U?
+U 1 1 639A6A2A
+P 2350 4150
+F 0 "U?" H 2338 4575 50  0001 C CNN
+F 1 "TSSP58P3" H 2338 4484 50  0001 C CNN
+F 2 "OptoDevice:Vishay_MINICAST-3Pin" H 2300 3775 50  0001 C CNN
+F 3 "http://www.vishay.com/docs/82462/tsop581.pdf" H 3000 4450 50  0001 C CNN
+	1    2350 4150
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	7750 3550 7300 3550
+Wire Wire Line
+	7750 3350 7650 3350
+Wire Wire Line
+	7650 3350 7650 3450
+Wire Wire Line
+	7650 3450 7300 3450
+Wire Wire Line
+	7950 3150 7550 3150
+Wire Wire Line
+	7550 3150 7550 3350
+Wire Wire Line
+	7550 3350 7300 3350
+Wire Wire Line
+	8150 3150 8150 3100
+Wire Wire Line
+	8150 3100 7500 3100
+Wire Wire Line
+	7500 3100 7500 3250
+Wire Wire Line
+	7500 3250 7300 3250
+Wire Wire Line
+	6400 3050 6250 3050
+Wire Wire Line
+	6250 3050 6250 2950
+Wire Wire Line
+	6250 2950 6400 2950
+Wire Wire Line
+	6400 3350 5900 3350
+Wire Wire Line
+	5900 3350 5900 2150
+Wire Wire Line
+	5900 2150 4400 2150
+Wire Wire Line
+	4400 2150 4400 3250
+Wire Wire Line
+	4400 3250 4550 3250
+Wire Wire Line
+	6400 3450 5750 3450
+Wire Wire Line
+	5750 3450 5750 2250
+Wire Wire Line
+	5750 2250 4500 2250
+Wire Wire Line
+	4500 2250 4500 3150
+Wire Wire Line
+	4500 3150 4550 3150
+Wire Wire Line
+	5150 4950 6800 4950
+Wire Wire Line
+	6800 4950 6800 4150
+Connection ~ 5150 4950
+Wire Wire Line
+	6800 2650 6100 2650
+Wire Wire Line
+	6100 2650 6100 1950
+Wire Wire Line
+	6100 1950 5250 1950
+Wire Wire Line
+	5250 1900 5250 1950
+Connection ~ 5250 1950
+Wire Wire Line
+	5250 1950 5250 2450
+$Comp
+L Device:Battery 12V
+U 1 1 639DD173
+P 8450 3100
+F 0 "12V" H 8558 3146 50  0000 L CNN
+F 1 "Power Supply" H 8558 3055 50  0000 L CNN
+F 2 "" V 8450 3160 50  0001 C CNN
+F 3 "~" V 8450 3160 50  0001 C CNN
+	1    8450 3100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8450 2900 8450 2600
+Wire Wire Line
+	8450 2600 7000 2600
+Wire Wire Line
+	7000 2600 7000 2650
+Wire Wire Line
+	8450 3300 8450 4150
+Wire Wire Line
+	8450 4150 7000 4150
+$EndSCHEMATC

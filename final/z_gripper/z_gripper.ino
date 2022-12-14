@@ -46,7 +46,7 @@ void loop() {
         digitalWrite(stepPin, LOW);
         break;
       case 'b':
-        //Forward Same Direction
+        //UP Same Direction
         digitalWrite(dirPin, HIGH); // Enables the motor to move in a particular direction
         for (int x = 0; x < steps; x++) {
           digitalWrite(stepPin, HIGH);
@@ -58,7 +58,7 @@ void loop() {
         steps = 0;
         break;
       case 'c':
-        //Backward Same Direction
+        //Down Same Direction
         digitalWrite(dirPin, LOW); // Enables the motor to move in a particular direction
         for (int x = 0; x < steps; x++) {
           digitalWrite(stepPin, HIGH);

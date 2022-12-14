@@ -192,7 +192,7 @@ Wire Wire Line
 Wire Wire Line
 	5000 3750 5000 4750
 Wire Wire Line
-	5900 4450 5900 5250
+	5900 4450 5900 5150
 Wire Wire Line
 	5300 3150 4800 3150
 Wire Wire Line
@@ -213,4 +213,102 @@ Wire Wire Line
 	5100 1950 5100 3050
 Wire Wire Line
 	5100 3050 5300 3050
+$Comp
+L limitSwitch:LimitSwitch -Z
+U 1 1 639A7994
+P 4050 2800
+F 0 "-Z" H 4278 2596 50  0000 L CNN
+F 1 "LimitSwitch" H 4278 2505 50  0000 L CNN
+F 2 "" H 4050 2800 50  0001 C CNN
+F 3 "" H 4050 2800 50  0001 C CNN
+	1    4050 2800
+	1    0    0    -1  
+$EndComp
+$Comp
+L limitSwitch:LimitSwitch Z
+U 1 1 639A81B3
+P 4050 3650
+F 0 "Z" H 4278 3446 50  0000 L CNN
+F 1 "LimitSwitch" H 4278 3355 50  0000 L CNN
+F 2 "" H 4050 3650 50  0001 C CNN
+F 3 "" H 4050 3650 50  0001 C CNN
+	1    4050 3650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3900 3250 3900 3550
+Wire Wire Line
+	4800 3550 4800 4750
+Wire Wire Line
+	4800 5150 5900 5150
+Connection ~ 5900 5150
+Wire Wire Line
+	5900 5150 5900 5250
+Wire Wire Line
+	3900 4100 3900 4350
+Wire Wire Line
+	3900 4750 4800 4750
+Connection ~ 4800 4750
+Wire Wire Line
+	4800 4750 4800 5150
+Wire Wire Line
+	4050 3250 5300 3250
+Wire Wire Line
+	4050 4100 4900 4100
+Wire Wire Line
+	4900 4100 4900 3350
+Wire Wire Line
+	4900 3350 5300 3350
+$Comp
+L limitSwitch:LimitSwitch X
+U 1 1 639A6A25
+P 3300 3050
+F 0 "X" H 3528 2846 50  0000 L CNN
+F 1 "LimitSwitch" H 3528 2755 50  0000 L CNN
+F 2 "" H 3300 3050 50  0001 C CNN
+F 3 "" H 3300 3050 50  0001 C CNN
+	1    3300 3050
+	1    0    0    -1  
+$EndComp
+$Comp
+L limitSwitch:LimitSwitch Y
+U 1 1 639A7C5F
+P 3300 3600
+F 0 "Y" H 3528 3396 50  0000 L CNN
+F 1 "LimitSwitch" H 3528 3305 50  0000 L CNN
+F 2 "" H 3300 3600 50  0001 C CNN
+F 3 "" H 3300 3600 50  0001 C CNN
+	1    3300 3600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3150 4050 3150 4350
+Wire Wire Line
+	3150 4350 3900 4350
+Connection ~ 3900 4350
+Wire Wire Line
+	3900 4350 3900 4750
+Wire Wire Line
+	3900 3550 4800 3550
+Wire Wire Line
+	3150 3500 3150 3550
+Wire Wire Line
+	3150 3550 3900 3550
+Connection ~ 3900 3550
+Wire Wire Line
+	3300 4050 3300 4200
+Wire Wire Line
+	3300 4200 5200 4200
+Wire Wire Line
+	5200 4200 5200 3950
+Wire Wire Line
+	5200 3950 5300 3950
+Wire Wire Line
+	3300 3500 3300 3600
+Wire Wire Line
+	3300 3600 5200 3600
+Wire Wire Line
+	5200 3600 5200 3550
+Wire Wire Line
+	5200 3550 5300 3550
 $EndSCHEMATC
