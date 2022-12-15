@@ -1,6 +1,6 @@
 from serial import Serial
 import time
-
+import cv
 def sweepFromCorner():
     serialPort = Serial('/dev/ttyACM0', 9600, timeout=1)    # Establishes Serial connection 
     i = 0

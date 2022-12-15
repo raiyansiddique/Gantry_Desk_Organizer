@@ -4,7 +4,7 @@ const int stepPin = 3;
 const int dirPin = 4;
 const int stepPin1 = 10;
 const int dirPin1 = 11;
-char buffer[MAX_BUF];  // where we store the message until we get a ';'
+char buffer[MAX_BUF];  // where we store the message until we get a new line
 int sofar;  // how much is in the buffer
 char state;
 String temp;
