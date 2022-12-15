@@ -119,12 +119,14 @@ def main():
         while not visionSystem.found_object:
             
             serialPort.write(b'b100\n')  
-            time.sleep(0.1)
             if i%2 == 0:   
                 j = 0
-                while j<20:       
-                    time.sleep(0.1)
-                    serialPort.write(b'h100\n')
+                while j<20:      
+                    serialPort.write(b'l100\n')
+                    output = serialPort.readline().decode()
+                    while 'finished' not in output:
+                        output = serialPort.readline().decode()
+                        pass
                     j += 1
                     ret, frame = camera.read()
                     frame_HSV = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
@@ -154,9 +156,12 @@ def main():
                     #         break
             else:
                 j = 0
-                while j<20:
-                    time.sleep(0.1)
-                    serialPort.write(b'i100\n')
+                while j<20: 
+                    serialPort.write(b'm100\n')
+                    output = serialPort.readline().decode()
+                    while 'finished' not in output:
+                        output = serialPort.readline().decode()
+                        pass
                     j+=1
                     ret, frame = camera.read()
                     frame_HSV = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
@@ -186,9 +191,8 @@ def main():
                     #         break
             i +=1
             if visionSystem.found_object:
-                            print("Found")
-                            break
-
+                    print("found")
+                    break
 
         # Close window
         if cv2.waitKey(25) & 0xFF == ord('q'):

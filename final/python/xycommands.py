@@ -32,11 +32,10 @@ def backToZero(i, j):
     else:
         y = j
     if y<=x:
-        steps =  int(x * 100* math.sqrt(2))
+        steps =  int(x * 10000* math.sqrt(2))
         serialPort.write(bytes(('g'+ str(steps) + '\n'), "utf8"))
         output = serialPort.readline().decode()
         while 'finished' not in output:
-            print(output)
             output = serialPort.readline().decode()
             pass
         if j<0:
@@ -46,15 +45,13 @@ def backToZero(i, j):
 
         output = serialPort.readline().decode()
         while 'finished' not in output:
-            print(output)
             output = serialPort.readline().decode()
             pass
     else:
-        steps =  int(y * 100* math.sqrt(2))
+        steps =  int(y * 10000 * math.sqrt(2))
         serialPort.write(bytes(('g'+ str(steps) + '\n'), "utf8"))
         output = serialPort.readline().decode()
         while 'finished' not in output:
-            print(output)
             output = serialPort.readline().decode()
             pass
         if j<0:
@@ -64,7 +61,6 @@ def backToZero(i, j):
 
         output = serialPort.readline().decode()
         while 'finished' not in output:
-            print(output)
             output = serialPort.readline().decode()
             pass
-backToZero(10, 10)
+backToZero(5, 5)

@@ -1,3 +1,9 @@
+#include <ezButton.h>
+
+ezButton posX(5);  // create ezButton object that attach to pin 5;
+ezButton negX(6);  // create ezButton object that attach to pin 6;
+ezButton posY(7);  // create ezButton object that attach to pin 7;
+ezButton negY(8);  // create ezButton object that attach to pin 8;
 #define MAX_BUF               (64)                     // What is the longest message Arduino can store?
 int steps;
 const int stepPin = 3;
@@ -214,10 +220,10 @@ void loop() {
         for (int x = 0; x < steps; x++) {
           digitalWrite(stepPin, HIGH);
           digitalWrite(stepPin1, HIGH);
-          delayMicroseconds(1500);
+          delayMicroseconds(1000);
           digitalWrite(stepPin, LOW);
           digitalWrite(stepPin1, LOW);
-          delayMicroseconds(1500);
+          delayMicroseconds(1000);
         }
         state = 'a';
         steps = 0;
@@ -231,10 +237,10 @@ void loop() {
         for (int x = 0; x < steps; x++) {
           digitalWrite(stepPin, HIGH);
           digitalWrite(stepPin1, HIGH);
-          delayMicroseconds(1500);
+          delayMicroseconds(1000);
           digitalWrite(stepPin, LOW);
           digitalWrite(stepPin1, LOW);
-          delayMicroseconds(1500);
+          delayMicroseconds(1000);
         }
         state = 'a';
         steps = 0;
