@@ -8,7 +8,6 @@ int steps;
 const int stepPin = 10;
 const int dirPin = 11;
 const int beamPin = 4;
-const int beamPinOut = 5;
 int beamBreakState = 0;
 int beamLastState = 0;
 char buffer[MAX_BUF];  // where we store the message until we get a ';'
@@ -21,7 +20,6 @@ void setup() {
   pinMode(stepPin, OUTPUT);
   pinMode(dirPin, OUTPUT);
   // IR Beam Break
-  pinMode(beamPinOut, OUTPUT);
   pinMode(beamPin, INPUT);
   // Servo
   myservo.attach(9);
