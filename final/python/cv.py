@@ -5,8 +5,8 @@ from serial import Serial
 import time
 class cvExpoMarker:
     def __init__(self):
-        self.P_COSNTANT = 1.65    # Proportional controller for Sprint1 motor speed
-        self.IMG_WIDTH = 640     # Image width given from the Microsoft USB camera
+        # self.P_COSNTANT = 1.65    # Proportional controller for Sprint1 motor speed
+        # self.IMG_WIDTH = 640     # Image width given from the Microsoft USB camera
         self.found_object = False
 
     def color_detection(self, hue_bounds, sat_bounds, val_bounds, frame):
@@ -33,37 +33,37 @@ class cvExpoMarker:
         contours = contours[0] if len(contours) == 2 else contours[1]
         return contours
 
-    def get_x_speed(self, bin_img):
-        """
-        Calculate the speed and direction to keep masked object in the center of the frame. 
-        Args:
-            bin_img: A Mat of a binary image.
-        Returns:
-            An int of the motor speed.
-        """
-        # Calculate the average x location of white pixels in the binary image
-        avg_x = np.sum(np.where(bin_img==255)[1])/len(np.where(bin_img==255)[1])
-        # By subtracting
-        speed = ((self.IMG_WIDTH/2) - avg_x) / self.P_COSNTANT
-        # If no white pixels are found, set speed to 0
-        if isnan(speed):
-            speed = 0
-        print(speed)
-        return int(speed)
+    # def get_x_speed(self, bin_img):
+    #     """
+    #     Calculate the speed and direction to keep masked object in the center of the frame. 
+    #     Args:
+    #         bin_img: A Mat of a binary image.
+    #     Returns:
+    #         An int of the motor speed.
+    #     """
+    #     # Calculate the average x location of white pixels in the binary image
+    #     avg_x = np.sum(np.where(bin_img==255)[1])/len(np.where(bin_img==255)[1])
+    #     # By subtracting
+    #     speed = ((self.IMG_WIDTH/2) - avg_x) / self.P_COSNTANT
+    #     # If no white pixels are found, set speed to 0
+    #     if isnan(speed):
+    #         speed = 0
+    #     print(speed)
+    #     return int(speed)
 
     def nothing(x):
         pass
 
-    def get_contours(self, contours, frame, color: str):
+    def get_contours(self, contours):# , frame, color: str):
         for cntr in contours:
             x,y,w,h = cv2.boundingRect(cntr)
             # Set minimum bound box size
             if (w*h > 10000):
-                rect_x, rect_y = ((x+w/2), (y+h/2))
-                rect_center = int(rect_x),int(rect_y)
-                cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 0, 255), 2)
-                cv2.putText(frame, color, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
-                cv2.circle(frame, (rect_center), 4, (0, 255, 0), 2)
+                # rect_x, rect_y = ((x+w/2), (y+h/2))
+                # rect_center = int(rect_x),int(rect_y)
+                # cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 0, 255), 2)
+                # cv2.putText(frame, color, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
+                # cv2.circle(frame, (rect_center), 4, (0, 255, 0), 2)
                 self.found_object = True
             elif self.found_object:
                 self.found_object = False
@@ -113,23 +113,9 @@ def main():
         g_sat_bounds = [60, 255]
         g_val_bounds = [85, 255]
 
-        ret, frame = camera.read()
-        frame_HSV = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-        # Create a binary image using the HSV bounds
-        # binary_image = visionSystem.color_detection(hue_bounds, sat_bounds, val_bounds, frame_HSV)
-        # purple_binary_image = visionSystem.color_detection(p_hue_bounds, p_sat_bounds, p_val_bounds, frame_HSV)
-        # blue_binary_image = visionSystem.color_detection(b_hue_bounds, b_sat_bounds, b_val_bounds, frame_HSV)
-        green_binary_image = visionSystem.color_detection(g_hue_bounds, g_sat_bounds, g_val_bounds, frame_HSV)
-        # red_binary_image = visionSystem.color_detection(r_hue_bounds, r_sat_bounds, r_val_bounds, frame_HSV)
-
-
-        # bin_image_list = [[binary_image, 'None'], [purple_binary_image, 'Purple'], [blue_binary_image, 'Blue'], [green_binary_image, 'Green'], [red_binary_image, 'Red']]
-
-        # cv2.imshow("Frame", frame)
-        # cv2.imshow('binary', binary_image)
-        #visionSystem.found_object = False
         i = 0
         j = 0
+
         while not visionSystem.found_object:
             
             serialPort.write(b'b100\n')  
@@ -144,15 +130,18 @@ def main():
                     frame_HSV = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
                     # Create a binary image using the HSV bounds
                     # binary_image = visionSystem.color_detection(hue_bounds, sat_bounds, val_bounds, frame_HSV)
-                    # purple_binary_image = visionSystem.color_detection(p_hue_bounds, p_sat_bounds, p_val_bounds, frame_HSV)
-                    # blue_binary_image = visionSystem.color_detection(b_hue_bounds, b_sat_bounds, b_val_bounds, frame_HSV)
+                    purple_binary_image = visionSystem.color_detection(p_hue_bounds, p_sat_bounds, p_val_bounds, frame_HSV)
+                    blue_binary_image = visionSystem.color_detection(b_hue_bounds, b_sat_bounds, b_val_bounds, frame_HSV)
                     green_binary_image = visionSystem.color_detection(g_hue_bounds, g_sat_bounds, g_val_bounds, frame_HSV)
-                    # red_binary_image = visionSystem.color_detection(r_hue_bounds, r_sat_bounds, r_val_bounds, frame_HSV)
+                    red_binary_image = visionSystem.color_detection(r_hue_bounds, r_sat_bounds, r_val_bounds, frame_HSV)
 
 
                     # bin_image_list = [[binary_image, 'None'], [purple_binary_image, 'Purple'], [blue_binary_image, 'Blue'], [green_binary_image, 'Green'], [red_binary_image, 'Red']]
-
-                    visionSystem.get_contours(visionSystem.draw_contour(green_binary_image), frame, 'green')
+                    
+                    visionSystem.get_contours(visionSystem.draw_contour(green_binary_image)) # , frame, 'green')
+                    visionSystem.get_contours(visionSystem.draw_contour(red_binary_image))
+                    visionSystem.get_contours(visionSystem.draw_contour(blue_binary_image))
+                    visionSystem.get_contours(visionSystem.draw_contour(purple_binary_image))  
 
                     if visionSystem.found_object:
                             print("Found")
@@ -173,15 +162,19 @@ def main():
                     frame_HSV = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
                     # Create a binary image using the HSV bounds
                     # binary_image = visionSystem.color_detection(hue_bounds, sat_bounds, val_bounds, frame_HSV)
-                    # purple_binary_image = visionSystem.color_detection(p_hue_bounds, p_sat_bounds, p_val_bounds, frame_HSV)
-                    # blue_binary_image = visionSystem.color_detection(b_hue_bounds, b_sat_bounds, b_val_bounds, frame_HSV)
+                    purple_binary_image = visionSystem.color_detection(p_hue_bounds, p_sat_bounds, p_val_bounds, frame_HSV)
+                    blue_binary_image = visionSystem.color_detection(b_hue_bounds, b_sat_bounds, b_val_bounds, frame_HSV)
                     green_binary_image = visionSystem.color_detection(g_hue_bounds, g_sat_bounds, g_val_bounds, frame_HSV)
-                    # red_binary_image = visionSystem.color_detection(r_hue_bounds, r_sat_bounds, r_val_bounds, frame_HSV)
+                    red_binary_image = visionSystem.color_detection(r_hue_bounds, r_sat_bounds, r_val_bounds, frame_HSV)
 
 
                     # bin_image_list = [[binary_image, 'None'], [purple_binary_image, 'Purple'], [blue_binary_image, 'Blue'], [green_binary_image, 'Green'], [red_binary_image, 'Red']]
 
-                    visionSystem.get_contours(visionSystem.draw_contour(green_binary_image), frame, 'green')
+                    visionSystem.get_contours(visionSystem.draw_contour(green_binary_image)) # , frame, 'green')
+                    visionSystem.get_contours(visionSystem.draw_contour(red_binary_image))
+                    visionSystem.get_contours(visionSystem.draw_contour(blue_binary_image))
+                    visionSystem.get_contours(visionSystem.draw_contour(purple_binary_image))  
+
                     if visionSystem.found_object:
                             print("found")
                             break
