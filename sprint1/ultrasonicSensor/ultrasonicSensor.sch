@@ -1,0 +1,299 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L MCU_Module:Arduino_UNO_R2 A?
+U 1 1 6362B686
+P 5150 3600
+F 0 "A?" H 5150 4781 50  0000 C CNN
+F 1 "Arduino_UNO_R2" H 5150 4690 50  0000 C CNN
+F 2 "Module:Arduino_UNO_R2" H 5150 3600 50  0001 C CIN
+F 3 "https://www.arduino.cc/en/Main/arduinoBoardUno" H 5150 3600 50  0001 C CNN
+	1    5150 3600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Amplifier_Operational:LMC6484 U?
+U 1 1 6362C952
+P 6750 3150
+F 0 "U?" H 6750 3517 50  0000 C CNN
+F 1 "LMC6484" H 6750 3426 50  0000 C CNN
+F 2 "" H 6700 3250 50  0001 C CNN
+F 3 "http://www.ti.com/lit/ds/symlink/lmc6484.pdf" H 6800 3350 50  0001 C CNN
+	1    6750 3150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:Speaker_Ultrasound LS?
+U 1 1 63633C1B
+P 6500 1950
+F 0 "LS?" H 6674 1946 50  0000 L CNN
+F 1 "Speaker_Ultrasound" H 6674 1855 50  0000 L CNN
+F 2 "" H 6465 1900 50  0001 C CNN
+F 3 "~" H 6465 1900 50  0001 C CNN
+	1    6500 1950
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:Speaker_Ultrasound LS?
+U 1 1 63636BBC
+P 6500 2350
+F 0 "LS?" H 6674 2346 50  0000 L CNN
+F 1 "Speaker_Ultrasound" H 6674 2255 50  0000 L CNN
+F 2 "" H 6465 2300 50  0001 C CNN
+F 3 "~" H 6465 2300 50  0001 C CNN
+	1    6500 2350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5350 2600 5350 2300
+Wire Bus Line
+	5250 2300 5450 2300
+$Comp
+L power:GND #PWR?
+U 1 1 6363F534
+P 5250 4700
+F 0 "#PWR?" H 5250 4450 50  0001 C CNN
+F 1 "GND" H 5255 4527 50  0000 C CNN
+F 2 "" H 5250 4700 50  0001 C CNN
+F 3 "" H 5250 4700 50  0001 C CNN
+	1    5250 4700
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 63641027
+P 6050 4750
+F 0 "#PWR?" H 6050 4500 50  0001 C CNN
+F 1 "GND" H 6055 4577 50  0000 C CNN
+F 2 "" H 6050 4750 50  0001 C CNN
+F 3 "" H 6050 4750 50  0001 C CNN
+	1    6050 4750
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_POT_TRIM_US RV?
+U 1 1 63641C3C
+P 6050 4600
+F 0 "RV?" H 5982 4646 50  0000 R CNN
+F 1 "R_POT_TRIM_US" H 5982 4555 50  0000 R CNN
+F 2 "" H 6050 4600 50  0001 C CNN
+F 3 "~" H 6050 4600 50  0001 C CNN
+	1    6050 4600
+	1    0    0    -1  
+$EndComp
+Wire Bus Line
+	5950 4450 6150 4450
+Wire Wire Line
+	6200 4600 6300 4600
+Wire Wire Line
+	6300 4600 6300 4150
+Wire Wire Line
+	6100 4600 6100 3250
+Wire Wire Line
+	6300 2050 6000 2050
+Wire Bus Line
+	5850 1900 5850 2000
+Connection ~ 6300 1950
+Wire Wire Line
+	6300 1950 6350 1950
+Wire Wire Line
+	5850 1950 6300 1950
+$Comp
+L power:GND #PWR?
+U 1 1 6364C0B1
+P 5850 2050
+F 0 "#PWR?" H 5850 1800 50  0001 C CNN
+F 1 "GND" H 5855 1877 50  0000 C CNN
+F 2 "" H 5850 2050 50  0001 C CNN
+F 3 "" H 5850 2050 50  0001 C CNN
+	1    5850 2050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6300 2350 6000 2350
+Wire Wire Line
+	6000 2350 6000 2050
+Connection ~ 6000 2050
+Wire Wire Line
+	6000 2050 5850 2050
+$Comp
+L Device:R_US R?
+U 1 1 6364D2D6
+P 6300 2600
+F 0 "R?" H 6368 2646 50  0000 L CNN
+F 1 "4KOhm" H 6368 2555 50  0000 L CNN
+F 2 "" V 6340 2590 50  0001 C CNN
+F 3 "~" H 6300 2600 50  0001 C CNN
+	1    6300 2600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6100 3250 6450 3250
+Wire Wire Line
+	6300 2750 6050 2750
+$Comp
+L Device:C C?
+U 1 1 63661F03
+P 6050 2900
+F 0 "C?" H 6165 2946 50  0000 L CNN
+F 1 "1000pF" H 6165 2855 50  0000 L CNN
+F 2 "" H 6088 2750 50  0001 C CNN
+F 3 "~" H 6050 2900 50  0001 C CNN
+	1    6050 2900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7050 3150 7050 3550
+Wire Wire Line
+	7050 3550 6800 3550
+$Comp
+L Device:R_US R?
+U 1 1 63668713
+P 6650 3550
+F 0 "R?" V 6445 3550 50  0000 C CNN
+F 1 "400Ohm" V 6536 3550 50  0000 C CNN
+F 2 "" V 6690 3540 50  0001 C CNN
+F 3 "~" H 6650 3550 50  0001 C CNN
+	1    6650 3550
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 6367321D
+P 6300 3800
+F 0 "C?" H 6415 3846 50  0000 L CNN
+F 1 "1000pF" H 6415 3755 50  0000 L CNN
+F 2 "" H 6338 3650 50  0001 C CNN
+F 3 "~" H 6300 3800 50  0001 C CNN
+	1    6300 3800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6500 3550 6300 3550
+Wire Wire Line
+	6300 3550 6300 3650
+Wire Wire Line
+	6450 3050 6450 2900
+Connection ~ 6450 3050
+Wire Wire Line
+	6050 3050 6450 3050
+Wire Wire Line
+	6450 2900 7200 2900
+$Comp
+L Device:C C?
+U 1 1 6369599C
+P 7450 3050
+F 0 "C?" H 7565 3096 50  0000 L CNN
+F 1 "100pF" H 7565 3005 50  0000 L CNN
+F 2 "" H 7488 2900 50  0001 C CNN
+F 3 "~" H 7450 3050 50  0001 C CNN
+	1    7450 3050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_US R?
+U 1 1 6369FAB9
+P 7200 3050
+F 0 "R?" H 7268 3096 50  0000 L CNN
+F 1 "40Kohm" H 7268 3005 50  0000 L CNN
+F 2 "" V 7240 3040 50  0001 C CNN
+F 3 "~" H 7200 3050 50  0001 C CNN
+	1    7200 3050
+	1    0    0    -1  
+$EndComp
+Connection ~ 7200 2900
+Wire Wire Line
+	7200 2900 7450 2900
+Wire Wire Line
+	7450 2950 7450 3200
+Wire Wire Line
+	7450 3200 7200 3200
+Connection ~ 7450 3200
+Wire Wire Line
+	7050 3150 7200 3150
+Wire Wire Line
+	7200 3150 7200 3200
+Connection ~ 7050 3150
+Connection ~ 7200 3200
+Wire Wire Line
+	6350 3950 6300 3950
+Wire Wire Line
+	7350 3950 7300 3950
+Connection ~ 6300 3950
+Wire Wire Line
+	6300 3950 6200 3950
+Wire Wire Line
+	6900 4050 7000 4050
+$Comp
+L Device:C C?
+U 1 1 636AAEB0
+P 7900 4200
+F 0 "C?" H 8015 4246 50  0000 L CNN
+F 1 "100pF" H 8015 4155 50  0000 L CNN
+F 2 "" H 7938 4050 50  0001 C CNN
+F 3 "~" H 7900 4200 50  0001 C CNN
+	1    7900 4200
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_US R?
+U 1 1 636AAEB6
+P 7650 4200
+F 0 "R?" H 7718 4246 50  0000 L CNN
+F 1 "40Kohm" H 7718 4155 50  0000 L CNN
+F 2 "" V 7690 4190 50  0001 C CNN
+F 3 "~" H 7650 4200 50  0001 C CNN
+	1    7650 4200
+	1    0    0    -1  
+$EndComp
+Connection ~ 7650 4050
+Wire Wire Line
+	7650 4050 7900 4050
+Wire Wire Line
+	7900 4100 7900 4350
+Wire Wire Line
+	7900 4350 7650 4350
+Connection ~ 7900 4350
+Wire Wire Line
+	7650 4300 7650 4350
+Connection ~ 7650 4350
+$Comp
+L Amplifier_Operational:LMC6484 U?
+U 1 1 63630D59
+P 6600 4050
+F 0 "U?" H 6600 4417 50  0000 C CNN
+F 1 "LMC6484" H 6600 4326 50  0000 C CNN
+F 2 "" H 6550 4150 50  0001 C CNN
+F 3 "http://www.ti.com/lit/ds/symlink/lmc6484.pdf" H 6650 4250 50  0001 C CNN
+	1    6600 4050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7650 4350 6200 4350
+Wire Wire Line
+	6200 3950 6200 4350
+Wire Wire Line
+	7000 4050 7000 4400
+Wire Wire Line
+	7000 4400 5700 4400
+Wire Wire Line
+	5700 4400 5700 3600
+Wire Wire Line
+	5700 3600 5650 3600
+Connection ~ 7000 4050
+Wire Wire Line
+	7000 4050 7650 4050
+$EndSCHEMATC

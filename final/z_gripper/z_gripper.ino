@@ -6,7 +6,7 @@ Servo myservo;  // create servo object to control a servo
 #define MAX_BUF               (64)                     // What is the longest message Arduino can store?
 int steps;
 const int stepPin = 10;
-const int dirPin = 11;
+const int dirPin = 13;
 const int beamPin = 4;
 int beamBreakState = 0;
 int beamLastState = 0;
@@ -19,6 +19,7 @@ void setup() {
   // Stepper
   pinMode(stepPin, OUTPUT);
   pinMode(dirPin, OUTPUT);
+  digitalWrite(dirPin, HIGH);
   // IR Beam Break
   pinMode(beamPin, INPUT);
   digitalWrite(beamPin, HIGH);
@@ -72,18 +73,6 @@ void loop() {
         break;
       case 'b':
         //UP Same Direction
-        digitalWrite(dirPin, HIGH); // Enables the motor to move in a particular direction
-        for (int x = 0; x < steps; x++) {
-          digitalWrite(stepPin, HIGH);
-          delayMicroseconds(500);
-          digitalWrite(stepPin, LOW);
-          delayMicroseconds(500);
-        }
-        state = 'a';
-        steps = 0;
-        break;
-      case 'c':
-        //Down Same Direction
         digitalWrite(dirPin, LOW); // Enables the motor to move in a particular direction
         for (int x = 0; x < steps; x++) {
           digitalWrite(stepPin, HIGH);
@@ -91,6 +80,20 @@ void loop() {
           digitalWrite(stepPin, LOW);
           delayMicroseconds(500);
         }
+        Serial.println("b");
+        state = 'a';
+        steps = 0;
+        break;
+      case 'c':
+        //Down Same Direction
+        digitalWrite(dirPin, HIGH); // Enables the motor to move in a particular direction
+        for (int x = 0; x < steps; x++) {
+          digitalWrite(stepPin, HIGH);
+          delayMicroseconds(500);
+          digitalWrite(stepPin, LOW);
+          delayMicroseconds(500);
+        }
+        Serial.println("c");
         state = 'a';
         steps = 0;
         break;
