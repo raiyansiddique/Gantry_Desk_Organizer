@@ -89,6 +89,7 @@ void loop() {
         }
         state = 'a';
         steps = 0;
+        Serial.println("finished");
         break;
 
       case 'e':
@@ -105,6 +106,7 @@ void loop() {
         }
         state = 'a';
         steps = 0;
+        Serial.println("finished");
         break;
 
       case 'f':
@@ -121,6 +123,7 @@ void loop() {
         }
         state = 'a';
         steps = 0;
+        Serial.println("finished");
         break;
 
       case 'g':
@@ -137,6 +140,7 @@ void loop() {
         }
         state = 'a';
         steps = 0;
+        Serial.println("finished");
         break;
       case 'h':
         //Gripper move stationary
@@ -152,6 +156,7 @@ void loop() {
         }
         state = 'a';
         steps = 0;
+        Serial.println("finished");
         break;
 
       case 'i':
@@ -168,6 +173,7 @@ void loop() {
         }
         state = 'a';
         steps = 0;
+        Serial.println("finished");
         break;
       case 'j':
         //Forward Same Direction
@@ -183,6 +189,7 @@ void loop() {
         }
         state = 'a';
         steps = 0;
+        Serial.println("finished");
         break;
       case 'k':
         //Backward Same Direction
@@ -198,6 +205,7 @@ void loop() {
         }
         state = 'a';
         steps = 0;
+        Serial.println("finished");
         break;
       case 'l':
         //Gripper move stationary
@@ -213,6 +221,7 @@ void loop() {
         }
         state = 'a';
         steps = 0;
+        Serial.println("finished");
         break;
 
       case 'm':
@@ -229,6 +238,7 @@ void loop() {
         }
         state = 'a';
         steps = 0;
+        Serial.println("finished");
         break;
       default:
         digitalWrite(stepPin, LOW);
