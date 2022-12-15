@@ -19,14 +19,25 @@ void setup() {
   pinMode(dirPin, OUTPUT);
   pinMode(stepPin1, OUTPUT);
   pinMode(dirPin1, OUTPUT);
+
+  posX.setDebounceTime(50);
+  negX.setDebounceTime(50);
+  posY.setDebounceTime(50);
+  negY.setDebounceTime(50);
+  
   Serial.flush();
   Serial.begin(9600); // Serial communication begin to read data
 
 }
 
 void loop() {
+    posX.loop();
+    negX.loop();
+    posY.loop();
+    negY.loop();
   // listen to serial commands
   while (Serial.available() > 0) {
+    steps = 0;
     char c = Serial.read();
     Serial.print(c); // Know that we got the message
     if (sofar < (MAX_BUF - 1)) {
@@ -55,30 +66,40 @@ void loop() {
         digitalWrite(dirPin, HIGH); // Enables the motor to move in a particular direction
         digitalWrite(dirPin1, HIGH); // Enables the motor to move in a particular direction
         for (int x = 0; x < steps; x++) {
+          posY.loop();
+          if(posY.getState() == LOW){
+            Serial.println("posY");
+            state = 'a';
+            break;
+          }
           digitalWrite(stepPin, HIGH);
           digitalWrite(stepPin1, HIGH);
-          delayMicroseconds(500);
+          delayMicroseconds(700);
           digitalWrite(stepPin, LOW);
           digitalWrite(stepPin1, LOW);
-          delayMicroseconds(500);
+          delayMicroseconds(700);
         }
-        state = 'a';
-        steps = 0;
+        Serial.println("finished");
         break;
       case 'c':
         //Backward Same Direction
         digitalWrite(dirPin, LOW); // Enables the motor to move in a particular direction
         digitalWrite(dirPin1, LOW); // Enables the motor to move in a particular direction
         for (int x = 0; x < steps; x++) {
+          negY.loop();
+          if(negY.getState() == LOW){
+            Serial.println("negY");
+            state = 'a';
+            break;
+          }
           digitalWrite(stepPin, HIGH);
           digitalWrite(stepPin1, HIGH);
-          delayMicroseconds(500);
+          delayMicroseconds(700);
           digitalWrite(stepPin, LOW);
           digitalWrite(stepPin1, LOW);
-          delayMicroseconds(500);
+          delayMicroseconds(700);
         }
-        state = 'a';
-        steps = 0;
+        Serial.println("finished");
         break;
 
       case 'd':
@@ -86,15 +107,25 @@ void loop() {
         digitalWrite(dirPin, HIGH); // Enables the motor to move in a particular direction
         digitalWrite(dirPin1, HIGH); // Enables the motor to move in a particular direction
         for (int x = 0; x < steps; x++) {
+          posY.loop();
+          if(posY.getState() == LOW){
+            Serial.println("posY");
+            state = 'l';
+            break;
+          }
+          posX.loop();
+          if(posX.getState() == LOW){
+            Serial.println("posX");
+            state = 'b';
+            break;
+          }
           digitalWrite(stepPin, HIGH);
           digitalWrite(stepPin1, LOW);
-          delayMicroseconds(500);
+          delayMicroseconds(1000);
           digitalWrite(stepPin, LOW);
           digitalWrite(stepPin1, LOW);
-          delayMicroseconds(500);
+          delayMicroseconds(1000);
         }
-        state = 'a';
-        steps = 0;
         Serial.println("finished");
         break;
 
@@ -103,15 +134,25 @@ void loop() {
         digitalWrite(dirPin, HIGH); // Enables the motor to move in a particular direction
         digitalWrite(dirPin1, HIGH); // Enables the motor to move in a particular direction
         for (int x = 0; x < steps; x++) {
+          posY.loop();
+          if(posY.getState() == LOW){
+            Serial.println("posY");
+            state = 'm';
+            break;
+          }
+          negX.loop();
+          if(negX.getState() == LOW){
+            Serial.println("negX");
+            state = 'b';
+            break;
+          }
           digitalWrite(stepPin, LOW);
           digitalWrite(stepPin1, HIGH);
-          delayMicroseconds(500);
+          delayMicroseconds(1000);
           digitalWrite(stepPin, LOW);
           digitalWrite(stepPin1, LOW);
-          delayMicroseconds(500);
+          delayMicroseconds(1000);
         }
-        state = 'a';
-        steps = 0;
         Serial.println("finished");
         break;
 
@@ -120,15 +161,25 @@ void loop() {
         digitalWrite(dirPin, LOW); // Enables the motor to move in a particular direction
         digitalWrite(dirPin1, LOW); // Enables the motor to move in a particular direction
         for (int x = 0; x < steps; x++) {
+          negY.loop();
+          if(negY.getState() == LOW){
+            Serial.println("negY");
+            state = 'l';
+            break;
+          }
+          posX.loop();
+          if(posX.getState() == LOW){
+            Serial.println("posX");
+            state = 'c';
+            break;
+          }
           digitalWrite(stepPin, LOW);
           digitalWrite(stepPin1, HIGH);
-          delayMicroseconds(500);
+          delayMicroseconds(700);
           digitalWrite(stepPin, LOW);
           digitalWrite(stepPin1, LOW);
-          delayMicroseconds(500);
+          delayMicroseconds(700);
         }
-        state = 'a';
-        steps = 0;
         Serial.println("finished");
         break;
 
@@ -137,15 +188,25 @@ void loop() {
         digitalWrite(dirPin, LOW); // Enables the motor to move in a particular direction
         digitalWrite(dirPin1, LOW); // Enables the motor to move in a particular direction
         for (int x = 0; x < steps; x++) {
+          negY.loop();
+          if(negY.getState() == LOW){
+            Serial.println("negY");
+            state = 'm';
+            break;
+          }
+          negX.loop();
+          if(negX.getState() == LOW){
+            Serial.println("negX");
+            state = 'c';
+            break;
+          }
           digitalWrite(stepPin, HIGH);
           digitalWrite(stepPin1, LOW);
-          delayMicroseconds(500);
+          delayMicroseconds(700);
           digitalWrite(stepPin, LOW);
           digitalWrite(stepPin1, LOW);
-          delayMicroseconds(500);
+          delayMicroseconds(700);
         }
-        state = 'a';
-        steps = 0;
         Serial.println("finished");
         break;
       case 'h':
@@ -153,15 +214,20 @@ void loop() {
         digitalWrite(dirPin, HIGH); // Enables the motor to move in a particular direction
         digitalWrite(dirPin1, LOW); // Enables the motor to move in a particular direction
         for (int x = 0; x < steps; x++) {
+          posX.loop();
+          if(posX.getState() == LOW){
+            Serial.println("posX");
+            state = 'a';
+            break;
+          }
           digitalWrite(stepPin, HIGH);
           digitalWrite(stepPin1, HIGH);
-          delayMicroseconds(500);
+          delayMicroseconds(700);
           digitalWrite(stepPin, LOW);
           digitalWrite(stepPin1, LOW);
-          delayMicroseconds(500);
+          delayMicroseconds(700);
         }
         state = 'a';
-        steps = 0;
         Serial.println("finished");
         break;
 
@@ -170,15 +236,20 @@ void loop() {
         digitalWrite(dirPin, LOW); // Enables the motor to move in a particular direction
         digitalWrite(dirPin1, HIGH); // Enables the motor to move in a particular direction
         for (int x = 0; x < steps; x++) {
+          negX.loop();
+          if(negX.getState() == LOW){
+            Serial.println("negX");
+            state = 'a';
+            break;
+          }
           digitalWrite(stepPin, HIGH);
           digitalWrite(stepPin1, HIGH);
-          delayMicroseconds(500);
+          delayMicroseconds(700);
           digitalWrite(stepPin, LOW);
           digitalWrite(stepPin1, LOW);
-          delayMicroseconds(500);
+          delayMicroseconds(700);
         }
         state = 'a';
-        steps = 0;
         Serial.println("finished");
         break;
       case 'j':
@@ -188,13 +259,12 @@ void loop() {
         for (int x = 0; x < steps; x++) {
           digitalWrite(stepPin, HIGH);
           digitalWrite(stepPin1, HIGH);
-          delayMicroseconds(1500);
+          delayMicroseconds(1700);
           digitalWrite(stepPin, LOW);
           digitalWrite(stepPin1, LOW);
-          delayMicroseconds(1500);
+          delayMicroseconds(1700);
         }
         state = 'a';
-        steps = 0;
         Serial.println("finished");
         break;
       case 'k':
@@ -204,13 +274,12 @@ void loop() {
         for (int x = 0; x < steps; x++) {
           digitalWrite(stepPin, HIGH);
           digitalWrite(stepPin1, HIGH);
-          delayMicroseconds(1500);
+          delayMicroseconds(1700);
           digitalWrite(stepPin, LOW);
           digitalWrite(stepPin1, LOW);
-          delayMicroseconds(1500);
+          delayMicroseconds(1700);
         }
         state = 'a';
-        steps = 0;
         Serial.println("finished");
         break;
       case 'l':
@@ -218,6 +287,12 @@ void loop() {
         digitalWrite(dirPin, HIGH); // Enables the motor to move in a particular direction
         digitalWrite(dirPin1, LOW); // Enables the motor to move in a particular direction
         for (int x = 0; x < steps; x++) {
+          posX.loop();
+          if(posX.getState() == LOW){
+            Serial.println("posX");
+            state = 'a';
+            break;
+          }
           digitalWrite(stepPin, HIGH);
           digitalWrite(stepPin1, HIGH);
           delayMicroseconds(1000);
@@ -226,7 +301,6 @@ void loop() {
           delayMicroseconds(1000);
         }
         state = 'a';
-        steps = 0;
         Serial.println("finished");
         break;
 
@@ -235,6 +309,12 @@ void loop() {
         digitalWrite(dirPin, LOW); // Enables the motor to move in a particular direction
         digitalWrite(dirPin1, HIGH); // Enables the motor to move in a particular direction
         for (int x = 0; x < steps; x++) {
+          negX.loop();
+          if(negX.getState() == LOW){
+            Serial.println("negX");
+            state = 'a';
+            break;
+          }
           digitalWrite(stepPin, HIGH);
           digitalWrite(stepPin1, HIGH);
           delayMicroseconds(1000);
@@ -243,12 +323,12 @@ void loop() {
           delayMicroseconds(1000);
         }
         state = 'a';
-        steps = 0;
         Serial.println("finished");
         break;
       default:
         digitalWrite(stepPin, LOW);
         digitalWrite(stepPin1, LOW);
+        state = state;
 
     }
   }
