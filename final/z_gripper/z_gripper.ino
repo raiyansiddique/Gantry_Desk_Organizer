@@ -7,14 +7,25 @@ Servo myservo;  // create servo object to control a servo
 int steps;
 const int stepPin = 10;
 const int dirPin = 11;
+const int beamPin = 4;
+const int beamPinOut = 5;
+int beamBreakState = 0;
+int beamLastState = 0;
 char buffer[MAX_BUF];  // where we store the message until we get a ';'
 int sofar;  // how much is in the buffer
 char state;
 String temp;
 int pos = 0;    // variable to store the servo position
 void setup() {
+  // Stepper 
   pinMode(stepPin, OUTPUT);
   pinMode(dirPin, OUTPUT);
+  // IR Beam Break
+  pinMode(beamPinOut, OUTPUT);
+  pinMode(beamPin, INPUT);
+  // Servo
+  myservo.attach(9);
+
   Serial.flush();
   Serial.begin(9600); // Serial communication begin to read data
 
@@ -39,12 +50,28 @@ void loop() {
       sofar = 0;
     }
 
+    beamBreakState = digitalRead(SENSORPIN);
+    if (sensorState && !lastState) {
+      Serial.println("Unbroken");
+    } 
+    if (!sensorState && lastState) {
+      Serial.println("Broken");
+    }
+    lastState = sensorState;
 
     switch (state) {
       case 'a':
         //Stop running stepper motors
         digitalWrite(stepPin, LOW);
-        break;
+        beamBreakState = digitalRead(SENSORPIN);
+        if (sensorState && !lastState) {
+          Serial.println("Unbroken");
+        } 
+        if (!sensorState && lastState) {
+          Serial.println("Broken");
+        }
+        lastState = sensorState;
+          break;
       case 'b':
         //UP Same Direction
         digitalWrite(dirPin, HIGH); // Enables the motor to move in a particular direction
@@ -88,6 +115,15 @@ void loop() {
         steps = 0;
         break;
       default:
+        beamBreakState = digitalRead(SENSORPIN);
+        if (sensorState && !lastState) {
+          Serial.println("Unbroken");
+        } 
+        if (!sensorState && lastState) {
+          Serial.println("Broken");
+        }
+        lastState = sensorState;
+        
         digitalWrite(stepPin, LOW);
     }
   }
