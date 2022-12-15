@@ -16,14 +16,15 @@ char state;
 String temp;
 int pos = 0;    // variable to store the servo position
 void setup() {
-  // Stepper 
+  // Stepper
   pinMode(stepPin, OUTPUT);
   pinMode(dirPin, OUTPUT);
   // IR Beam Break
   pinMode(beamPin, INPUT);
+  digitalWrite(beamPin, HIGH);
   // Servo
   myservo.attach(9);
-
+  myservo.write(180);
   Serial.flush();
   Serial.begin(9600); // Serial communication begin to read data
 
@@ -48,28 +49,27 @@ void loop() {
       sofar = 0;
     }
 
-    beamBreakState = digitalRead(SENSORPIN);
-    if (sensorState && !lastState) {
+    beamBreakState = digitalRead(beamPin);
+    if (beamBreakState && !beamLastState) {
       Serial.println("Unbroken");
-    } 
-    if (!sensorState && lastState) {
+    }
+    if (!beamBreakState && beamLastState) {
       Serial.println("Broken");
     }
-    lastState = sensorState;
+    beamLastState = beamBreakState;
 
     switch (state) {
       case 'a':
         //Stop running stepper motors
-        digitalWrite(stepPin, LOW);
-        beamBreakState = digitalRead(SENSORPIN);
-        if (sensorState && !lastState) {
+        beamBreakState = digitalRead(beamPin);
+        if (beamBreakState && !beamLastState) {
           Serial.println("Unbroken");
-        } 
-        if (!sensorState && lastState) {
+        }
+        if (!beamBreakState && beamLastState) {
           Serial.println("Broken");
         }
-        lastState = sensorState;
-          break;
+        beamLastState = beamBreakState;
+        break;
       case 'b':
         //UP Same Direction
         digitalWrite(dirPin, HIGH); // Enables the motor to move in a particular direction
@@ -99,6 +99,15 @@ void loop() {
         //Diagonal_____ One Motor
         for (pos = 180; pos >= 95; pos -= 1) { // goes from 180 degrees to 0 degrees
           myservo.write(pos);              // tell servo to go to position in variable 'pos'
+
+          beamBreakState = digitalRead(beamPin);
+          if (beamBreakState && !beamLastState) {
+            Serial.println("Unbroken");
+          }
+          if (!beamBreakState && beamLastState) {
+            Serial.println("Broken");
+          }
+          beamLastState = beamBreakState;
           delay(15);                       // waits 15 ms for the servo to reach the position
         }
         state = 'a';
@@ -107,22 +116,30 @@ void loop() {
       case 'e':
         for (pos = 95; pos <= 180; pos += 1) { // goes from 180 degrees to 0 degrees
           myservo.write(pos);              // tell servo to go to position in variable 'pos'
-          delay(15);                       // waits 15 ms for the servo to reach the position
+          delay(15);
+
+          beamBreakState = digitalRead(beamPin);
+          if (beamBreakState && !beamLastState) {
+            Serial.println("Unbroken");
+          }
+          if (!beamBreakState && beamLastState) {
+            Serial.println("Broken");
+          }
+          beamLastState = beamBreakState;// waits 15 ms for the servo to reach the position
         }
         state = 'a';
         steps = 0;
         break;
       default:
-        beamBreakState = digitalRead(SENSORPIN);
-        if (sensorState && !lastState) {
+        beamBreakState = digitalRead(beamPin);
+        if (beamBreakState && !beamLastState) {
           Serial.println("Unbroken");
-        } 
-        if (!sensorState && lastState) {
+        }
+        if (!beamBreakState && beamLastState) {
           Serial.println("Broken");
         }
-        lastState = sensorState;
-        
-        digitalWrite(stepPin, LOW);
+        beamLastState = beamBreakState;
+
     }
   }
 
