@@ -75,25 +75,26 @@ def getObject(serialPort):
     beam_state = gripperPort.readline().decode()
     gripperPort.write(bytes(('e200' + '\n'), "utf8"))
     time.sleep(2)
-    gripperPort.write(bytes(('c2000' + '\n'), "utf8"))
+    gripperPort.write(bytes(('c1500' + '\n'), "utf8"))
     time.sleep(2)
 
-    while 'Broken' not in beam_state:
-        xyPort.write(bytes(('b100' + '\n'), "utf8"))
-        gripperPort.write(bytes(('a' + '\n'), "utf8"))
+    xyPort.write(bytes(('b250' + '\n'), "utf8"))
+    gripperPort.write(bytes(('a' + '\n'), "utf8"))
+    output = xyPort.readline().decode()
+    beam_state = gripperPort.readline().decode()
+    while 'finished' not in output:
         output = xyPort.readline().decode()
-        beam_state = gripperPort.readline().decode()
-        while 'finished' not in output:
-            output = xyPort.readline().decode()
-            pass
+        pass
     gripperPort.write(bytes(('d100' + '\n'), "utf8"))
     time.sleep(0.1)
-    gripperPort.write(bytes(('b2000' + '\n'), "utf8"))
-    time.sleep(2)
-    xyPort.write(bytes(('b10000' + '\n'), "utf8"))
-    time.sleep(3)
-    xyPort.write(bytes(('l10000' + '\n'), "utf8"))
+    gripperPort.write(bytes(('b1500' + '\n'), "utf8"))
     time.sleep(4)
+    xyPort.write(bytes(('c10000' + '\n'), "utf8"))
+    time.sleep(5)
+    xyPort.write(bytes(('m10000' + '\n'), "utf8"))
+    time.sleep(4)
+    gripperPort.write(bytes(('c1500' + '\n'), "utf8"))
+    time.sleep(5)
     gripperPort.write(bytes(('e200' + '\n'), "utf8"))
 
 def main():
@@ -159,21 +160,22 @@ def main():
                     frame_HSV = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
                     # Create a binary image using the HSV bounds
                     # binary_image = visionSystem.color_detection(hue_bounds, sat_bounds, val_bounds, frame_HSV)
-                    purple_binary_image = visionSystem.color_detection(p_hue_bounds, p_sat_bounds, p_val_bounds, frame_HSV)
-                    blue_binary_image = visionSystem.color_detection(b_hue_bounds, b_sat_bounds, b_val_bounds, frame_HSV)
+                    #purple_binary_image = visionSystem.color_detection(p_hue_bounds, p_sat_bounds, p_val_bounds, frame_HSV)
+                    #blue_binary_image = visionSystem.color_detection(b_hue_bounds, b_sat_bounds, b_val_bounds, frame_HSV)
                     green_binary_image = visionSystem.color_detection(g_hue_bounds, g_sat_bounds, g_val_bounds, frame_HSV)
-                    red_binary_image = visionSystem.color_detection(r_hue_bounds, r_sat_bounds, r_val_bounds, frame_HSV)
+                    #red_binary_image = visionSystem.color_detection(r_hue_bounds, r_sat_bounds, r_val_bounds, frame_HSV)
 
 
                     # bin_image_list = [[binary_image, 'None'], [purple_binary_image, 'Purple'], [blue_binary_image, 'Blue'], [green_binary_image, 'Green'], [red_binary_image, 'Red']]
                     
                     visionSystem.get_contours(visionSystem.draw_contour(green_binary_image)) # , frame, 'green')
-                    visionSystem.get_contours(visionSystem.draw_contour(red_binary_image))
-                    visionSystem.get_contours(visionSystem.draw_contour(blue_binary_image))
-                    visionSystem.get_contours(visionSystem.draw_contour(purple_binary_image))  
+                    #visionSystem.get_contours(visionSystem.draw_contour(red_binary_image))
+                    #visionSystem.get_contours(visionSystem.draw_contour(blue_binary_image))
+                    #visionSystem.get_contours(visionSystem.draw_contour(purple_binary_image))  
 
                     if visionSystem.found_object:
                             print("Found")
+                            serialPort.write(b'm200\n')
                             break
 
                     # for bin in bin_image_list:
@@ -194,20 +196,21 @@ def main():
                     frame_HSV = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
                     # Create a binary image using the HSV bounds
                     # binary_image = visionSystem.color_detection(hue_bounds, sat_bounds, val_bounds, frame_HSV)
-                    purple_binary_image = visionSystem.color_detection(p_hue_bounds, p_sat_bounds, p_val_bounds, frame_HSV)
-                    blue_binary_image = visionSystem.color_detection(b_hue_bounds, b_sat_bounds, b_val_bounds, frame_HSV)
+                   # purple_binary_image = visionSystem.color_detection(p_hue_bounds, p_sat_bounds, p_val_bounds, frame_HSV)
+                    #blue_binary_image = visionSystem.color_detection(b_hue_bounds, b_sat_bounds, b_val_bounds, frame_HSV)
                     green_binary_image = visionSystem.color_detection(g_hue_bounds, g_sat_bounds, g_val_bounds, frame_HSV)
-                    red_binary_image = visionSystem.color_detection(r_hue_bounds, r_sat_bounds, r_val_bounds, frame_HSV)
+                    #red_binary_image = visionSystem.color_detection(r_hue_bounds, r_sat_bounds, r_val_bounds, frame_HSV)
 
 
                     # bin_image_list = [[binary_image, 'None'], [purple_binary_image, 'Purple'], [blue_binary_image, 'Blue'], [green_binary_image, 'Green'], [red_binary_image, 'Red']]
 
                     visionSystem.get_contours(visionSystem.draw_contour(green_binary_image)) # , frame, 'green')
-                    visionSystem.get_contours(visionSystem.draw_contour(red_binary_image))
-                    visionSystem.get_contours(visionSystem.draw_contour(blue_binary_image))
-                    visionSystem.get_contours(visionSystem.draw_contour(purple_binary_image))  
+                    #visionSystem.get_contours(visionSystem.draw_contour(red_binary_image))
+                    #visionSystem.get_contours(visionSystem.draw_contour(blue_binary_image))
+                    #visionSystem.get_contours(visionSystem.draw_contour(purple_binary_image))  
 
                     if visionSystem.found_object:
+                            serialPort.write(b'l200\n')
                             print("found")
                             break
 
@@ -222,7 +225,6 @@ def main():
                     i = 0
                     getObject(serialPort)
                     break
-
         # Close window
         if cv2.waitKey(25) & 0xFF == ord('q'):
             break
