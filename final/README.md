@@ -1,22 +1,18 @@
-# Gantry_Desk_Organizer Repo
-### By Raiyan Siddique, Evan Lockwood, Ben Eisenbraun, Mateo Macias, and Braden Vaccari
-
-
-
-## Required Libraries
-    pip install pyserial
-    pip install opencv-python
+# Final Implementaton
 
 ## Description
-In this repo, you will find the system developement of an H-Bot Gantry with a computer vision system. The goal of this system was to pick and place Expo Markers based on their color.
 
-## Sprint 1
-In Sprint 1, code for a basic color masking and Arduino Serial connection motor control can be found
+For our final implmentation of our H-Bot Gantry system, 
 
-## Sprint 3
+## CV.py
+This script establishes Serial connection to each Arduino used in our gantry system. Their is an Arduino that controls xy movement and an Arduino controlling the z axis and gripper servo.
 
-In Sprint 3, Arduino and Python serial code can be found for all directional movements of an H-Bot gantry system.
+This script also houses all computer vision code. For computer vision, we are completing color masking to locate Expo Markers in range of the gantry system.
 
-## Final
+## xy_gantry
 
-To read more about our final implementation, please reference the ReadMe in the final folder.
+In this folder, you will find the Arduino sketch for each directional case an H-Bot gantry can accomplish. Each case is mapped to a alphanumeric key and the number of steps you want to move in that direction.
+
+## z_gripper
+
+This folder has the Arduino sketch for control of the gripper mechanism on the xy gantry. Each case s mapped to a alphanumeric key and the number of steps you want to move in that direction.
