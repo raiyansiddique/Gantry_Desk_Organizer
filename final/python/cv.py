@@ -5,8 +5,11 @@ from serial import Serial
 import time
 class cvExpoMarker:
     def __init__(self):
-        # self.P_COSNTANT = 1.65    # Proportional controller for Sprint1 motor speed
-        # self.IMG_WIDTH = 640     # Image width given from the Microsoft USB camera
+        self.P_CONSTANT = 0.5   # Proportional controller for Sprint1 motor speed
+        self.IMG_WIDTH = 640    # Image width given from the Microsoft USB camera
+        self.IMG_HEIGHT = 480    
+        self.center_x = 0
+        self.center_y = 0
         self.found_object = False
 
     def color_detection(self, hue_bounds, sat_bounds, val_bounds, frame):
@@ -51,17 +54,56 @@ class cvExpoMarker:
     #     print(speed)
     #     return int(speed)
 
+    def center_gripper(self, serialPort):
+        xyPort = Serial('/dev/ttyACM0', 9600, timeout=1)    # Establishes Serial connection  
+        time.sleep(5)
+        print('moving gripper')
+        x_thing = abs(self.center_x - self.IMG_WIDTH/2 + 45) 
+        y_thing = abs(self.center_y - self.IMG_HEIGHT/2)
+        while (x_thing > 10 and  y_thing > 10):
+            if((self.IMG_WIDTH/2 - self.center_x) > 10):
+                steps = x_thing * self.P_CONSTANT
+                xyPort.write(bytes(('i' + str(steps) + '\n'), "utf8"))
+                # time.sleep(1)
+                # xyPort.write(bytes(('a' + '\n'), "utf8"))
+                print("Move gripper left")
+                i = 0
+                getObject(serialPort)
+                break
+                # break
+            if(self.center_x - self.IMG_WIDTH/2+ 45 > 10):
+                steps = x_thing * self.P_CONSTANT
+                xyPort.write(bytes(('h' + str(steps) + '\n'), "utf8"))
+                # time.sleep(1)
+                # xyPort.write(bytes(('a' + '\n'), "utf8"))
+                print("Move gripper right")
+                i = 0
+                getObject(serialPort)
+                break
+                # break
+
+            # if(self.center_y - self.IMG_HEIGHT/2 > 10):
+            #     steps = y_thing * self.P_CONSTANT
+            #     xyPort.write(bytes(('b' + str(steps) + '\n'), "utf8"))
+            #     # time.sleep(1)
+            #     # xyPort.write(bytes(('a' + '\n'), "utf8"))
+            #     print("Move toward steppers")
+            #     # break
+
+
     def nothing(x):
         pass
 
-    def get_contours(self, contours):# , frame, color: str):
+    def get_contours(self, contours , frame):#, color: str):
         for cntr in contours:
             x,y,w,h = cv2.boundingRect(cntr)
             # Set minimum bound box size
-            if (w*h > 10000):
-                # rect_x, rect_y = ((x+w/2), (y+h/2))
-                # rect_center = int(rect_x),int(rect_y)
-                # cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 0, 255), 2)
+            if (w*h > 5000 and w*h < 9000):
+                rect_x, rect_y = ((x+w/2), (y+h/2))
+                rect_center = int(rect_x),int(rect_y)
+                self.center_x = int(rect_x)
+                self.center_y = int(rect_y)
+                cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 0, 255), 2)
                 # cv2.putText(frame, color, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
                 # cv2.circle(frame, (rect_center), 4, (0, 255, 0), 2)
                 self.found_object = True
@@ -101,7 +143,7 @@ def main():
     """
     """
     visionSystem = cvExpoMarker()
-    camera = cv2.VideoCapture(2)    # Start video capture. Index 2 is the USB camera
+    camera = cv2.VideoCapture(0)    # Start video capture. Index 2 is the USB camera
 
 
     cv2.namedWindow('controls')
@@ -137,9 +179,9 @@ def main():
         r_val_bounds = [170, 255]
 
         # Green HSV Bounds
-        g_hue_bounds = [55, 179]
-        g_sat_bounds = [60, 255]
-        g_val_bounds = [85, 255]
+        g_hue_bounds = [50, 90]
+        g_sat_bounds = [100, 255]
+        g_val_bounds = [30, 255]
 
         i = 0
         j = 0
@@ -168,14 +210,15 @@ def main():
 
                     # bin_image_list = [[binary_image, 'None'], [purple_binary_image, 'Purple'], [blue_binary_image, 'Blue'], [green_binary_image, 'Green'], [red_binary_image, 'Red']]
                     
-                    visionSystem.get_contours(visionSystem.draw_contour(green_binary_image)) # , frame, 'green')
+                    visionSystem.get_contours(visionSystem.draw_contour(green_binary_image) , frame)#, 'green')
                     #visionSystem.get_contours(visionSystem.draw_contour(red_binary_image))
                     #visionSystem.get_contours(visionSystem.draw_contour(blue_binary_image))
                     #visionSystem.get_contours(visionSystem.draw_contour(purple_binary_image))  
 
                     if visionSystem.found_object:
                             print("Found")
-                            serialPort.write(b'm200\n')
+                            # visionSystem.center_gripper(serialPort)
+                            # serialPort.write(b'm200\n')
                             break
 
                     # for bin in bin_image_list:
@@ -204,13 +247,14 @@ def main():
 
                     # bin_image_list = [[binary_image, 'None'], [purple_binary_image, 'Purple'], [blue_binary_image, 'Blue'], [green_binary_image, 'Green'], [red_binary_image, 'Red']]
 
-                    visionSystem.get_contours(visionSystem.draw_contour(green_binary_image)) # , frame, 'green')
+                    visionSystem.get_contours(visionSystem.draw_contour(green_binary_image) , frame)#, 'green')
                     #visionSystem.get_contours(visionSystem.draw_contour(red_binary_image))
                     #visionSystem.get_contours(visionSystem.draw_contour(blue_binary_image))
                     #visionSystem.get_contours(visionSystem.draw_contour(purple_binary_image))  
 
                     if visionSystem.found_object:
-                            serialPort.write(b'l200\n')
+                            # visionSystem.center_gripper(serialPort)
+                            # serialPort.write(b'l200\n')
                             print("found")
                             break
 
@@ -222,6 +266,7 @@ def main():
             i +=1
             if visionSystem.found_object:
                     print("found")
+                    #visionSystem.center_gripper(serialPort)
                     i = 0
                     getObject(serialPort)
                     break
